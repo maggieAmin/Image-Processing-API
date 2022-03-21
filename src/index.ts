@@ -1,8 +1,7 @@
 import express from 'express';
 
-
 export const app = express();
-const port = 3000;
+const port = 3500;
 
 app.get('/api', (req, res) => {
  res.send('Hello, world!');
