@@ -2,6 +2,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { ImageInputFolder } from '..';
+import { resizeImage } from '../img-util/resize';
 
 export const doesFileExist = (filename: string): boolean => {
   const filepath = path.join(ImageInputFolder, filename);
@@ -40,7 +41,10 @@ const resizeRoute = (req: express.Request, res: express.Response) => {
     height = 200;
   }
 
-  res.send('Hello, world!');
+  // TODO If image is already resized return it from thumbs folder
+
+  const outputFilePath = resizeImage(filename, width, height);
+  res.sendFile(outputFilePath, { root: process.cwd() });
 };
 
 export default resizeRoute;

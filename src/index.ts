@@ -12,3 +12,4 @@ app.listen(port, () => {
 });
 
 export const ImageInputFolder = 'assets/full';
+export const ImageOutputFolder = 'assets/thumbs';
