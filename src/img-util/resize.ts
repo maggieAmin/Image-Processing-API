@@ -10,21 +10,22 @@ export const outputFileName = (
   const filnameBits = filename.split('.');
   return `${filnameBits[0]}-w${width}h${height}.${filnameBits[1]}`;
 };
+export const outputFilePath = (
+  filename: string,
+  width: number,
+  height: number
+): string => {
+  return path.join(ImageOutputFolder, outputFileName(filename, width, height));
+};
 
 export const resizeImage = async (
   filename: string,
   width: number,
   height: number
-): Promise<string> => {
+): Promise<void> => {
+  console.log(`Resizing image ${filename} to ${width}x${height}`);
   const inputFilePath = path.join(ImageInputFolder, filename);
-  const outputFilePath = path.join(
-    ImageOutputFolder,
-    outputFileName(filename, width, height)
-  );
+  const outputFile = outputFilePath(filename, width, height);
 
-  const outputFile = await sharp(inputFilePath)
-    .resize(width, height)
-    .toFile(outputFilePath);
-
-  return outputFilePath;
+  await sharp(inputFilePath).resize(width, height).toFile(outputFile);
 };

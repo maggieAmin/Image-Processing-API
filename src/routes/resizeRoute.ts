@@ -2,7 +2,11 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { ImageInputFolder } from '..';
-import { resizeImage } from '../img-util/resize';
+import {
+  outputFileName,
+  outputFilePath,
+  resizeImage,
+} from '../img-util/resize';
 
 export const doesFileExist = (filename: string): boolean => {
   const filepath = path.join(ImageInputFolder, filename);
@@ -41,10 +45,13 @@ const resizeRoute = async (req: express.Request, res: express.Response) => {
     height = 200;
   }
 
-  // TODO If image is already resized return it from thumbs folder
-
-  const outputFilePath = await resizeImage(filename, width, height);
-  res.sendFile(outputFilePath, { root: process.cwd() });
+  // If image is already resized return it from thumbs folder
+  const outputFile = outputFilePath(filename, width, height);
+  if (!fs.existsSync(outputFile)) {
+    console.log(`File ${outputFile} does not already exist.`);
+    await resizeImage(filename, width, height);
+  }
+  res.sendFile(outputFile, { root: process.cwd() });
 };
 
 export default resizeRoute;
