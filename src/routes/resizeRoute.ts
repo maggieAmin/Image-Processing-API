@@ -9,7 +9,7 @@ export const doesFileExist = (filename: string): boolean => {
   return fs.existsSync(filepath);
 };
 
-const resizeRoute = (req: express.Request, res: express.Response) => {
+const resizeRoute = async (req: express.Request, res: express.Response) => {
   // Verify that the user provided the required parameter: filename
   if (!req.query['filename']) {
     // No filename parameter return error!
@@ -43,7 +43,7 @@ const resizeRoute = (req: express.Request, res: express.Response) => {
 
   // TODO If image is already resized return it from thumbs folder
 
-  const outputFilePath = resizeImage(filename, width, height);
+  const outputFilePath = await resizeImage(filename, width, height);
   res.sendFile(outputFilePath, { root: process.cwd() });
 };
 
