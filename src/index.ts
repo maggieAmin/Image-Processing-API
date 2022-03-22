@@ -8,7 +8,7 @@ const port = 3500;
 app.get('/api/image/resize', logger, resizeRoute);
 
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  console.log(`Server started at http://localhost:${port}/api/image/resize`);
 });
 
 export const ImageInputFolder = 'assets/full';
