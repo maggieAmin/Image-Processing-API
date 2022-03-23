@@ -1,3 +1,4 @@
+import path from 'path';
 import { outputFileName, outputFilePath } from '../../img-util/resize';
 
 describe('Test `outputFileName()`', () => {
@@ -8,10 +9,8 @@ describe('Test `outputFileName()`', () => {
 
 describe('Test `outputFilePath()`', () => {
   it('returns `assets/thumbs/fjord-w200h200.jpg` if input is fjord.jpg, 200, 200', () => {
-    expect(
-      outputFilePath('fjord.jpg', 200, 200).endsWith(
-        'assets/thumbs/fjord-w200h200.jpg'
-      )
-    ).toEqual(true);
+    expect(path.resolve(outputFilePath('fjord.jpg', 200, 200))).toEqual(
+      path.resolve('assets/thumbs/fjord-w200h200.jpg')
+    );
   });
 });
