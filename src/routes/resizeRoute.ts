@@ -29,16 +29,42 @@ const resizeRoute = async (req: express.Request, res: express.Response) => {
   // Check if size is provided; otherwise use default width & height 200x200
   let width: number;
   if (req.query['width']) {
+    if (isNaN(Number(req.query['width']))) {
+      //wrong input for field "width" return error!
+      res.status(400); // bad request
+      res.send('wrong input for field "width"');
+      return;
+    }
     width = parseInt(req.query['width'].toString());
   } else {
     width = 200;
   }
 
+  if (width <= 0) {
+    //wrong input for field "width" return error!
+    res.status(400); // bad request
+    res.send('wrong input for field "width"');
+    return;
+  }
+
   let height: number;
   if (req.query['height']) {
+    if (isNaN(Number(req.query['height']))) {
+      //wrong input for field "height" return error!
+      res.status(400); // bad request
+      res.send('wrong input for field "height"');
+      return;
+    }
     height = parseInt(req.query['height'].toString());
   } else {
     height = 200;
+  }
+
+  if (height <= 0) {
+    //wrong input for field "height" return error!
+    res.status(400); // bad request
+    res.send('wrong input for field "height"');
+    return;
   }
 
   // If image is already resized return it from thumbs folder

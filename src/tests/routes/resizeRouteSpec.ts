@@ -9,6 +9,50 @@ describe('Test resize route input validation', () => {
     expect(response.status).toBe(400);
     done();
   });
+  it('returns error if height is not a number', async (done) => {
+    const response = await request.get(
+      '/api/image/resize?filename=fjord.jpg&height=abc'
+    );
+    expect(response.status).toBe(400);
+    done();
+  });
+  it('returns error if width is not a number', async (done) => {
+    const response = await request.get(
+      '/api/image/resize?filename=fjord.jpg&width=abc'
+    );
+    expect(response.status).toBe(400);
+    done();
+  });
+
+  it('returns error if height is negative', async (done) => {
+    const response = await request.get(
+      '/api/image/resize?filename=fjord.jpg&height=-1'
+    );
+    expect(response.status).toBe(400);
+    done();
+  });
+  it('returns error if width is negative', async (done) => {
+    const response = await request.get(
+      '/api/image/resize?filename=fjord.jpg&width=-1'
+    );
+    expect(response.status).toBe(400);
+    done();
+  });
+
+  it('returns error if height is 0', async (done) => {
+    const response = await request.get(
+      '/api/image/resize?filename=fjord.jpg&height=0'
+    );
+    expect(response.status).toBe(400);
+    done();
+  });
+  it('returns error if width is 0', async (done) => {
+    const response = await request.get(
+      '/api/image/resize?filename=fjord.jpg&width=0'
+    );
+    expect(response.status).toBe(400);
+    done();
+  });
   it('returns not found if no file for filename exists in `full` folder', async (done) => {
     const response = await request.get('/api/image/resize?filename=notexist');
     expect(response.status).toBe(404);
